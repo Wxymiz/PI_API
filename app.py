@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from celery.result import AsyncResult
-from tasks import celery_app, calculate_pi
+from task import celery_app, calculate_pi
 
 app = FastAPI(title="Async Pi Calculator API")
 
@@ -17,7 +17,7 @@ def check_progress(task_id: str):
     """Returns current progress or final result of calculation."""
     task = AsyncResult(task_id, app=celery_app)
 
-    if task.state == "PENDING": # it could be only PROGRESS or FINISHED for state (you wrote that in Task#1) so I changed PENDING to PROGRESS
+    if task.state == "PENDING":
         return {"state": "PROGRESS", "progress": 0, "result": None}
 
     if task.state == "PROGRESS":
