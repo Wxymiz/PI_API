@@ -1,0 +1,21 @@
+version: "3.9"
+
+services:
+  app:
+    build: .
+    container_name: pi_app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:alpine
+    container_name: redis
+
+  celery:
+    build: .
+    container_name: pi_celery_worker
+    command: celery -A tasks.celery_app worker --loglevel=info
+    depends_on:
+      - redis
