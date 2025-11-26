@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from celery.result import AsyncResult
-from task import celery_app, calculate_pi
+from tasks import celery_app, calculate_pi
 
 app = FastAPI(title="Async Pi Calculator API")
 
